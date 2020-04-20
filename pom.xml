@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.atguigu.springclound</groupId>
+  <artifactId>clound2020</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>cloud-provider-payment8081</module>
+  </modules>
+
+
+  <!--统一管理jar包版本-->
+  <properties>
+    <!-- project -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compailer.source>1.8</maven.compailer.source>
+    <maven.compailer.target>1.8</maven.compailer.target>
+    <project.build.version>${project.version}</project.build.version>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <junit.version>4.12</junit.version>
+    <lo4j.version>1.2.17</lo4j.version>
+    <lombok.version>1.16.18</lombok.version>
+    <mysql.version>5.1.47</mysql.version>
+    <druid.version>1.1.16</druid.version>
+    <mybatis.spring.boot.version>2.0.1</mybatis.spring.boot.version>
+  </properties>
+
+  <!--子模块继承以后 提供作用：锁定版本——子module不用写group和version-->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>2.2.2.RELEASE</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>Hoxton.SR1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!--spring clound alibaba 2.1.0.RELEASE-->
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>2.1.0.RELEASE</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.version}</version>
+      </dependency>
+
+      <dependency>
+      <groupId>org.mybatis.spring.boot</groupId>
+      <artifactId>mybatis-spring-boot-starter</artifactId>
+      <version>${mybatis.spring.boot.version}</version>
+      <type>pom</type>
+    </dependency>
+
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid</artifactId>
+        <version>${druid.version}</version>
+      </dependency>
+    </dependencies>
+
+  </dependencyManagement>
+
+  <build>
+<!--    <plugins>
+      &lt;!&ndash; Package &ndash;&gt;
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>2.2.2.RELEASE</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+            <configuration>
+              <classifier>exec</classifier>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.compiler.plugin}</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <encoding>UTF-8</encoding>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>${maven.site.plugin}</version>
+      </plugin>
+
+      &lt;!&ndash; Code Analyze&ndash;&gt;
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>${maven.sonar.plugin}</version>
+      </plugin>
+    </plugins>-->
+  </build>
+</project>

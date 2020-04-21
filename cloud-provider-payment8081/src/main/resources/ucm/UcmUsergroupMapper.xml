@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suncreate.repository.ucm.UcmUsergroupMapper">
+	<resultMap id="BaseResultMap" type="com.suncreate.entity.ucm.UcmUsergroup">
+		<id column="UUID" property="uuid" jdbcType="NUMERIC" />
+		<result column="CREATER" property="creater" jdbcType="NUMERIC"/>
+		<result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP"/>
+		<result column="UPDATER" property="updater" jdbcType="NUMERIC"/>
+		<result column="UPDATETIME" property="updatetime" jdbcType="TIMESTAMP"/>
+		<result column="DELETED" property="deleted" jdbcType="VARCHAR"/>
+		<result column="ORGCODE" property="orgcode" jdbcType="VARCHAR"/>
+		<result column="VALID" property="valid" jdbcType="VARCHAR"/>
+		<result column="CLASSTYPE" property="classtype" jdbcType="VARCHAR"/>
+		<result column="CODE" property="code" jdbcType="VARCHAR"/>
+		<result column="NAME" property="name" jdbcType="VARCHAR"/>
+		<result column="DEPARTMENT" property="department" jdbcType="VARCHAR"/>
+		<result column="REMARK" property="remark" jdbcType="VARCHAR"/>
+		<result column="NODETYPE" property="nodetype" jdbcType="VARCHAR"/>
+		<result column="NODETYPEPATH" property="nodetypepath" jdbcType="VARCHAR"/>
+		<result column="PARENT" property="parent" jdbcType="VARCHAR"/>
+		<result column="FULLCODE" property="fullcode" jdbcType="VARCHAR"/>
+		<result column="LEVELS" property="levels" jdbcType="NUMERIC"/>
+		<result column="SYSTEM" property="system" jdbcType="VARCHAR"/>
+		<result column="AGENTGROUPALIAS" property="agentgroupalias" jdbcType="VARCHAR"/>
+		<result column="AGENTGROUPCONFPATH" property="agentgroupconfpath" jdbcType="VARCHAR"/>
+		<result column="DESTSYS" property="destsys" jdbcType="VARCHAR"/>
+		<result column="GROUPTYPE" property="grouptype" jdbcType="VARCHAR"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		a.UUID,a.CREATER,a.CREATETIME,a.UPDATER,a.UPDATETIME,a.DELETED,a.ORGCODE,a.VALID,a.CLASSTYPE,a.CODE,a.NAME,a.DEPARTMENT,a.REMARK,a.NODETYPE,a.NODETYPEPATH,a.PARENT,a.FULLCODE,a.LEVELS,a.SYSTEM,a.AGENTGROUPALIAS,a.AGENTGROUPCONFPATH,a.DESTSYS,a.GROUPTYPE
+	</sql>
+
+	<!-- 获取信息 -->
+	<select id="getModelByKey" resultMap="BaseResultMap" parameterType="java.lang.Long" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from UCM_USERGROUP a where a.UUID = #{uuid}
+	</select>
+
+	<!-- 删除信息 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long" flushCache="true">
+		delete from UCM_USERGROUP where UUID = #{uuid}
+	</delete>
+
+	<!-- 插入信息,插入后获取自增主键值 -->
+	<insert id="insert" parameterType="com.suncreate.entity.ucm.UcmUsergroup" flushCache="true">
+		<selectKey keyProperty="uuid" resultType="java.lang.Long" order="BEFORE">
+			SELECT SEQ_UCM_USERGROUP.nextval from dual
+		</selectKey>
+		insert into UCM_USERGROUP (UUID,CREATER,CREATETIME,UPDATER,UPDATETIME,DELETED,ORGCODE,VALID,CLASSTYPE,CODE,NAME,DEPARTMENT,REMARK,NODETYPE,NODETYPEPATH,PARENT,FULLCODE,LEVELS,SYSTEM,AGENTGROUPALIAS,AGENTGROUPCONFPATH,DESTSYS,GROUPTYPE)
+		values (#{uuid,jdbcType=NUMERIC},
+
+		#{creater,jdbcType=NUMERIC},
+		<if test="createtime != null" >to_timestamp(to_char(#{createtime},'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD HH24:MI:SS'),</if><if test="createtime == null" >null,</if>
+		#{updater,jdbcType=NUMERIC},
+		<if test="updatetime != null" >to_timestamp(to_char(#{updatetime},'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD HH24:MI:SS'),</if><if test="updatetime == null" >null,</if>
+		#{deleted,jdbcType=VARCHAR},
+		#{orgcode,jdbcType=VARCHAR},
+		#{valid,jdbcType=VARCHAR},
+		#{classtype,jdbcType=VARCHAR},
+		#{code,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{department,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{nodetype,jdbcType=VARCHAR},
+		#{nodetypepath,jdbcType=VARCHAR},
+		#{parent,jdbcType=VARCHAR},
+		#{fullcode,jdbcType=VARCHAR},
+		#{levels,jdbcType=NUMERIC},
+		#{system,jdbcType=VARCHAR},
+		#{agentgroupalias,jdbcType=VARCHAR},
+		#{agentgroupconfpath,jdbcType=VARCHAR},
+		#{destsys,jdbcType=VARCHAR},
+		#{grouptype,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertList" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into UCM_USERGROUP (UUID,CREATER,CREATETIME,UPDATER,UPDATETIME,DELETED,ORGCODE,VALID,CLASSTYPE,CODE,NAME,DEPARTMENT,REMARK,NODETYPE,NODETYPEPATH,PARENT,FULLCODE,LEVELS,SYSTEM,AGENTGROUPALIAS,AGENTGROUPCONFPATH,DESTSYS,GROUPTYPE)
+		<foreach collection="list" item="item" index="index" separator="union all">
+			(
+			select
+			#{item.uuid,jdbcType=NUMERIC},
+			#{item.creater,jdbcType=NUMERIC},
+			<if test="item.createtime != null" >to_timestamp(to_char(#{item.createtime},'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD HH24:MI:SS'),</if><if test="item.createtime == null" >null,</if>
+			#{item.updater,jdbcType=NUMERIC},
+			<if test="item.updatetime != null" >to_timestamp(to_char(#{item.updatetime},'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD HH24:MI:SS'),</if><if test="item.updatetime == null" >null,</if>
+			#{item.deleted,jdbcType=VARCHAR},
+			#{item.orgcode,jdbcType=VARCHAR},
+			#{item.valid,jdbcType=VARCHAR},
+			#{item.classtype,jdbcType=VARCHAR},
+			#{item.code,jdbcType=VARCHAR},
+			#{item.name,jdbcType=VARCHAR},
+			#{item.department,jdbcType=VARCHAR},
+			#{item.remark,jdbcType=VARCHAR},
+			#{item.nodetype,jdbcType=VARCHAR},
+			#{item.nodetypepath,jdbcType=VARCHAR},
+			#{item.parent,jdbcType=VARCHAR},
+			#{item.fullcode,jdbcType=VARCHAR},
+			#{item.levels,jdbcType=NUMERIC},
+			#{item.system,jdbcType=VARCHAR},
+			#{item.agentgroupalias,jdbcType=VARCHAR},
+			#{item.agentgroupconfpath,jdbcType=VARCHAR},
+			#{item.destsys,jdbcType=VARCHAR},
+			#{item.grouptype,jdbcType=VARCHAR}
+			from
+			dual
+			)
+		</foreach>
+
+	</insert>
+
+	<!-- 精确更新 -->
+	<update id="updateSelective" parameterType="com.suncreate.entity.ucm.UcmUsergroup" flushCache="true">
+		update UCM_USERGROUP a
+		<set >
+			<if test="creater != null" >
+				a.CREATER = #{creater},
+			</if>
+			<if test="createtime != null" >
+				a.CREATETIME = #{createtime},
+			</if>
+			<if test="updater != null" >
+				a.UPDATER = #{updater},
+			</if>
+			<if test="updatetime != null" >
+				a.UPDATETIME = #{updatetime},
+			</if>
+			<if test="deleted != null" >
+				a.DELETED = #{deleted},
+			</if>
+			<if test="orgcode != null" >
+				a.ORGCODE = #{orgcode},
+			</if>
+			<if test="valid != null" >
+				a.VALID = #{valid},
+			</if>
+			<if test="classtype != null" >
+				a.CLASSTYPE = #{classtype},
+			</if>
+			<if test="code != null" >
+				a.CODE = #{code},
+			</if>
+			<if test="name != null" >
+				a.NAME = #{name},
+			</if>
+			<if test="department != null" >
+				a.DEPARTMENT = #{department},
+			</if>
+			<if test="remark != null" >
+				a.REMARK = #{remark},
+			</if>
+			<if test="nodetype != null" >
+				a.NODETYPE = #{nodetype},
+			</if>
+			<if test="nodetypepath != null" >
+				a.NODETYPEPATH = #{nodetypepath},
+			</if>
+			<if test="parent != null" >
+				a.PARENT = #{parent},
+			</if>
+			<if test="fullcode != null" >
+				a.FULLCODE = #{fullcode},
+			</if>
+			<if test="levels != null" >
+				a.LEVELS = #{levels},
+			</if>
+			<if test="system != null" >
+				a.SYSTEM = #{system},
+			</if>
+			<if test="agentgroupalias != null" >
+				a.AGENTGROUPALIAS = #{agentgroupalias},
+			</if>
+			<if test="agentgroupconfpath != null" >
+				a.AGENTGROUPCONFPATH = #{agentgroupconfpath},
+			</if>
+			<if test="destsys != null" >
+				a.DESTSYS = #{destsys},
+			</if>
+			<if test="grouptype != null" >
+				a.GROUPTYPE = #{grouptype}
+			</if>
+		</set>
+		where a.UUID = #{uuid}
+	</update>
+
+	<!-- 统计记录 -->
+	<select id="countAll" resultType="java.lang.Long" parameterType="com.suncreate.entity.ucm.UcmUsergroup" flushCache="true">
+		SELECT count(UUID) FROM UCM_USERGROUP a
+		<where>
+			<if test="uuid!=null">
+				and a.UUID = #{uuid}
+			</if>
+			<if test="creater!=null">
+				and a.CREATER = #{creater}
+			</if>
+			<if test="createtime!=null">
+				and a.CREATETIME  = #{createtime}
+			</if>
+			<if test="updater!=null">
+				and a.UPDATER = #{updater}
+			</if>
+			<if test="updatetime!=null">
+				and a.UPDATETIME  = #{updatetime}
+			</if>
+			<if test="deleted!=null and deleted!=''">
+				and a.DELETED  = #{deleted}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and a.ORGCODE  = #{orgcode}
+			</if>
+			<if test="valid!=null and valid!=''">
+				and a.VALID  = #{valid}
+			</if>
+			<if test="classtype!=null and classtype!=''">
+				and a.CLASSTYPE  = #{classtype}
+			</if>
+			<if test="code!=null and code!=''">
+				and a.CODE  = #{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME  = #{name}
+			</if>
+			<if test="department!=null and department!=''">
+				and a.DEPARTMENT  = #{department}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and a.REMARK  = #{remark}
+			</if>
+			<if test="nodetype!=null and nodetype!=''">
+				and a.NODETYPE  = #{nodetype}
+			</if>
+			<if test="nodetypepath!=null and nodetypepath!=''">
+				and a.NODETYPEPATH  = #{nodetypepath}
+			</if>
+			<if test="parent!=null and parent!=''">
+				and a.PARENT  = #{parent}
+			</if>
+			<if test="fullcode!=null and fullcode!=''">
+				and a.FULLCODE  = #{fullcode}
+			</if>
+			<if test="levels!=null">
+				and a.LEVELS = #{levels}
+			</if>
+			<if test="system!=null and system!=''">
+				and a.SYSTEM  = #{system}
+			</if>
+			<if test="agentgroupalias!=null and agentgroupalias!=''">
+				and a.AGENTGROUPALIAS  = #{agentgroupalias}
+			</if>
+			<if test="agentgroupconfpath!=null and agentgroupconfpath!=''">
+				and a.AGENTGROUPCONFPATH  = #{agentgroupconfpath}
+			</if>
+			<if test="destsys!=null and destsys!=''">
+				and a.DESTSYS  = #{destsys}
+			</if>
+			<if test="grouptype!=null and grouptype!=''">
+				and a.GROUPTYPE  = #{grouptype}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有的ID -->
+	<select id="getAllIds" resultType="java.lang.String" parameterType="com.suncreate.entity.ucm.UcmUsergroup" flushCache="true">
+		SELECT UUID FROM UCM_USERGROUP a
+		<where>
+			<if test="uuid!=null">
+				and a.UUID = #{uuid}
+			</if>
+			<if test="creater!=null">
+				and a.CREATER = #{creater}
+			</if>
+			<if test="createtime!=null">
+				and a.CREATETIME  = #{createtime}
+			</if>
+			<if test="updater!=null">
+				and a.UPDATER = #{updater}
+			</if>
+			<if test="updatetime!=null">
+				and a.UPDATETIME  = #{updatetime}
+			</if>
+			<if test="deleted!=null and deleted!=''">
+				and a.DELETED  = #{deleted}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and a.ORGCODE  = #{orgcode}
+			</if>
+			<if test="valid!=null and valid!=''">
+				and a.VALID  = #{valid}
+			</if>
+			<if test="classtype!=null and classtype!=''">
+				and a.CLASSTYPE  = #{classtype}
+			</if>
+			<if test="code!=null and code!=''">
+				and a.CODE  = #{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME  = #{name}
+			</if>
+			<if test="department!=null and department!=''">
+				and a.DEPARTMENT  = #{department}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and a.REMARK  = #{remark}
+			</if>
+			<if test="nodetype!=null and nodetype!=''">
+				and a.NODETYPE  = #{nodetype}
+			</if>
+			<if test="nodetypepath!=null and nodetypepath!=''">
+				and a.NODETYPEPATH  = #{nodetypepath}
+			</if>
+			<if test="parent!=null and parent!=''">
+				and a.PARENT  = #{parent}
+			</if>
+			<if test="fullcode!=null and fullcode!=''">
+				and a.FULLCODE  = #{fullcode}
+			</if>
+			<if test="levels!=null">
+				and a.LEVELS = #{levels}
+			</if>
+			<if test="system!=null and system!=''">
+				and a.SYSTEM  = #{system}
+			</if>
+			<if test="agentgroupalias!=null and agentgroupalias!=''">
+				and a.AGENTGROUPALIAS  = #{agentgroupalias}
+			</if>
+			<if test="agentgroupconfpath!=null and agentgroupconfpath!=''">
+				and a.AGENTGROUPCONFPATH  = #{agentgroupconfpath}
+			</if>
+			<if test="destsys!=null and destsys!=''">
+				and a.DESTSYS  = #{destsys}
+			</if>
+			<if test="grouptype!=null and grouptype!=''">
+				and a.GROUPTYPE  = #{grouptype}
+			</if>
+		</where>
+		<if test="map!=null">
+			<if test="map.orderBy!=null">
+				${map.orderBy}
+			</if>
+		</if>
+	</select>
+
+	<!-- 按条件获取 -->
+	<select id="getListByWhere" resultMap="BaseResultMap" parameterType="com.suncreate.entity.ucm.UcmUsergroup" flushCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from UCM_USERGROUP a
+		<where>
+			<if test="uuid!=null">
+				and a.UUID = #{uuid}
+			</if>
+			<if test="creater!=null">
+				and a.CREATER = #{creater}
+			</if>
+			<if test="createtime!=null">
+				and a.CREATETIME =#{createtime}
+			</if>
+			<if test="updater!=null">
+				and a.UPDATER = #{updater}
+			</if>
+			<if test="updatetime!=null">
+				and a.UPDATETIME =#{updatetime}
+			</if>
+			<if test="deleted!=null and deleted!=''">
+				and a.DELETED =#{deleted}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and a.ORGCODE =#{orgcode}
+			</if>
+			<if test="valid!=null and valid!=''">
+				and a.VALID =#{valid}
+			</if>
+			<if test="classtype!=null and classtype!=''">
+				and a.CLASSTYPE =#{classtype}
+			</if>
+			<if test="code!=null and code!=''">
+				and a.CODE =#{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME =#{name}
+			</if>
+			<if test="department!=null and department!=''">
+				and a.DEPARTMENT =#{department}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and a.REMARK =#{remark}
+			</if>
+			<if test="nodetype!=null and nodetype!=''">
+				and a.NODETYPE =#{nodetype}
+			</if>
+			<if test="nodetypepath!=null and nodetypepath!=''">
+				and a.NODETYPEPATH =#{nodetypepath}
+			</if>
+			<if test="parent!=null and parent!=''">
+				and a.PARENT =#{parent}
+			</if>
+			<if test="fullcode!=null and fullcode!=''">
+				and a.FULLCODE =#{fullcode}
+			</if>
+			<if test="levels!=null">
+				and a.LEVELS = #{levels}
+			</if>
+			<if test="system!=null and system!=''">
+				and a.SYSTEM =#{system}
+			</if>
+			<if test="agentgroupalias!=null and agentgroupalias!=''">
+				and a.AGENTGROUPALIAS =#{agentgroupalias}
+			</if>
+			<if test="agentgroupconfpath!=null and agentgroupconfpath!=''">
+				and a.AGENTGROUPCONFPATH =#{agentgroupconfpath}
+			</if>
+			<if test="destsys!=null and destsys!=''">
+				and a.DESTSYS =#{destsys}
+			</if>
+			<if test="grouptype!=null and grouptype!=''">
+				and a.GROUPTYPE =#{grouptype}
+			</if>
+		</where>
+		<if test="map!=null">
+			<if test="map.orderBy!=null">
+				${map.orderBy}
+			</if>
+			<if test="map.orderBy==null">
+				ORDER BY a.UUID asc
+			</if>
+		</if>
+	</select>
+
+	<!-- 按条件获取信息 -->
+	<select id="getModelByWhere" resultMap="BaseResultMap" parameterType="com.suncreate.entity.ucm.UcmUsergroup" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from UCM_USERGROUP a
+		<where>
+			<if test="uuid!=null">
+				and a.UUID = #{uuid}
+			</if>
+			<if test="creater!=null">
+				and a.CREATER = #{creater}
+			</if>
+			<if test="createtime!=null">
+				and a.CREATETIME =#{createtime}
+			</if>
+			<if test="updater!=null">
+				and a.UPDATER = #{updater}
+			</if>
+			<if test="updatetime!=null">
+				and a.UPDATETIME =#{updatetime}
+			</if>
+			<if test="deleted!=null and deleted!=''">
+				and a.DELETED =#{deleted}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and a.ORGCODE =#{orgcode}
+			</if>
+			<if test="valid!=null and valid!=''">
+				and a.VALID =#{valid}
+			</if>
+			<if test="classtype!=null and classtype!=''">
+				and a.CLASSTYPE =#{classtype}
+			</if>
+			<if test="code!=null and code!=''">
+				and a.CODE =#{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME =#{name}
+			</if>
+			<if test="department!=null and department!=''">
+				and a.DEPARTMENT =#{department}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and a.REMARK =#{remark}
+			</if>
+			<if test="nodetype!=null and nodetype!=''">
+				and a.NODETYPE =#{nodetype}
+			</if>
+			<if test="nodetypepath!=null and nodetypepath!=''">
+				and a.NODETYPEPATH =#{nodetypepath}
+			</if>
+			<if test="parent!=null and parent!=''">
+				and a.PARENT =#{parent}
+			</if>
+			<if test="fullcode!=null and fullcode!=''">
+				and a.FULLCODE =#{fullcode}
+			</if>
+			<if test="levels!=null">
+				and a.LEVELS = #{levels}
+			</if>
+			<if test="system!=null and system!=''">
+				and a.SYSTEM =#{system}
+			</if>
+			<if test="agentgroupalias!=null and agentgroupalias!=''">
+				and a.AGENTGROUPALIAS =#{agentgroupalias}
+			</if>
+			<if test="agentgroupconfpath!=null and agentgroupconfpath!=''">
+				and a.AGENTGROUPCONFPATH =#{agentgroupconfpath}
+			</if>
+			<if test="destsys!=null and destsys!=''">
+				and a.DESTSYS =#{destsys}
+			</if>
+			<if test="grouptype!=null and grouptype!=''">
+				and a.GROUPTYPE =#{grouptype}
+			</if>
+		</where>
+		ORDER BY a.UUID asc
+	</select>
+
+	<!-- 按条件删除信息-->
+	<delete id="deleteByWhere" parameterType="com.suncreate.entity.ucm.UcmUsergroup" flushCache="true">
+		delete from UCM_USERGROUP
+		<where>
+			<if test="uuid!=null">
+				and UUID = #{uuid}
+			</if>
+			<if test="creater!=null">
+				and CREATER = #{creater}
+			</if>
+			<if test="createtime!=null">
+				and CREATETIME =#{createtime}
+			</if>
+			<if test="updater!=null">
+				and UPDATER = #{updater}
+			</if>
+			<if test="updatetime!=null">
+				and UPDATETIME =#{updatetime}
+			</if>
+			<if test="deleted!=null and deleted!=''">
+				and DELETED =#{deleted}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and ORGCODE =#{orgcode}
+			</if>
+			<if test="valid!=null and valid!=''">
+				and VALID =#{valid}
+			</if>
+			<if test="classtype!=null and classtype!=''">
+				and CLASSTYPE =#{classtype}
+			</if>
+			<if test="code!=null and code!=''">
+				and CODE =#{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and NAME =#{name}
+			</if>
+			<if test="department!=null and department!=''">
+				and DEPARTMENT =#{department}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and REMARK =#{remark}
+			</if>
+			<if test="nodetype!=null and nodetype!=''">
+				and NODETYPE =#{nodetype}
+			</if>
+			<if test="nodetypepath!=null and nodetypepath!=''">
+				and NODETYPEPATH =#{nodetypepath}
+			</if>
+			<if test="parent!=null and parent!=''">
+				and PARENT =#{parent}
+			</if>
+			<if test="fullcode!=null and fullcode!=''">
+				and FULLCODE =#{fullcode}
+			</if>
+			<if test="levels!=null">
+				and LEVELS = #{levels}
+			</if>
+			<if test="system!=null and system!=''">
+				and SYSTEM =#{system}
+			</if>
+			<if test="agentgroupalias!=null and agentgroupalias!=''">
+				and AGENTGROUPALIAS =#{agentgroupalias}
+			</if>
+			<if test="agentgroupconfpath!=null and agentgroupconfpath!=''">
+				and AGENTGROUPCONFPATH =#{agentgroupconfpath}
+			</if>
+			<if test="destsys!=null and destsys!=''">
+				and DESTSYS =#{destsys}
+			</if>
+			<if test="grouptype!=null and grouptype!=''">
+				and GROUPTYPE =#{grouptype}
+			</if>
+		</where>
+	</delete>
+</mapper>

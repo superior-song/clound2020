@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suncreate.repository.ucm.UcmRoleMapper">
+	<resultMap id="BaseResultMap" type="com.suncreate.entity.ucm.UcmRole">
+		<id column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="CREATER" property="creater" jdbcType="NUMERIC"/>
+		<result column="CREATE_TIME" property="createTime" jdbcType="NUMERIC"/>
+		<result column="UPDATER" property="updater" jdbcType="NUMERIC"/>
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="NUMERIC"/>
+		<result column="DELETED" property="deleted" jdbcType="NUMERIC"/>
+		<result column="DEPT_ID" property="deptId" jdbcType="NUMERIC"/>
+		<result column="VALID" property="valid" jdbcType="NUMERIC"/>
+		<result column="CODE" property="code" jdbcType="VARCHAR"/>
+		<result column="NAME" property="name" jdbcType="VARCHAR"/>
+		<result column="ROLE_TYPE" property="roleType" jdbcType="VARCHAR"/>
+		<result column="REMARK" property="remark" jdbcType="VARCHAR"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		a.ID,a.CREATER,a.CREATE_TIME,a.UPDATER,a.UPDATE_TIME,a.DELETED,a.DEPT_ID,a.VALID,a.CODE,a.NAME,a.ROLE_TYPE,a.REMARK
+	</sql>
+
+	<!-- 获取信息 -->
+	<select id="getModelByKey" resultMap="BaseResultMap" parameterType="java.lang.Long" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from ucm_role a where a.ID = #{id}
+	</select>
+
+	<!-- 删除信息 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long" flushCache="true">
+		delete from ucm_role where ID = #{id}
+	</delete>
+
+	<!-- 插入信息,插入后获取自增主键值 -->
+	<insert id="insert" parameterType="com.suncreate.entity.ucm.UcmRole" flushCache="true">
+		<selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
+			SELECT SEQ_ucm_role.nextval from dual
+		</selectKey>
+		insert into ucm_role (ID,CREATER,CREATE_TIME,UPDATER,UPDATE_TIME,DELETED,DEPT_ID,VALID,CODE,NAME,ROLE_TYPE,REMARK)
+		values (#{id,jdbcType=NUMERIC},
+
+		#{creater,jdbcType=NUMERIC},
+		#{createTime,jdbcType=NUMERIC},
+		#{updater,jdbcType=NUMERIC},
+		#{updateTime,jdbcType=NUMERIC},
+		#{deleted,jdbcType=NUMERIC},
+		#{deptId,jdbcType=NUMERIC},
+		#{valid,jdbcType=NUMERIC},
+		#{code,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{roleType,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<!-- 精确更新 -->
+	<update id="updateSelective" parameterType="com.suncreate.entity.ucm.UcmRole" flushCache="true">
+		update ucm_role a
+		<set >
+			<if test="creater != null" >
+				a.CREATER = #{creater},
+			</if>
+			<if test="createTime != null" >
+				a.CREATE_TIME = #{createTime},
+			</if>
+			<if test="updater != null" >
+				a.UPDATER = #{updater},
+			</if>
+			<if test="updateTime != null" >
+				a.UPDATE_TIME = #{updateTime},
+			</if>
+			<if test="deleted != null" >
+				a.DELETED = #{deleted},
+			</if>
+			<if test="deptId != null" >
+				a.DEPT_ID = #{deptId},
+			</if>
+			<if test="valid != null" >
+				a.VALID = #{valid},
+			</if>
+			<if test="code != null" >
+				a.CODE = #{code},
+			</if>
+			<if test="name != null" >
+				a.NAME = #{name},
+			</if>
+			<if test="roleType != null" >
+				a.ROLE_TYPE = #{roleType},
+			</if>
+			<if test="remark != null" >
+				a.REMARK = #{remark}
+			</if>
+		</set>
+		where a.ID = #{id}
+	</update>
+
+	<!-- 统计记录 -->
+	<select id="countAll" resultType="java.lang.Long" parameterType="com.suncreate.entity.ucm.UcmRole" flushCache="true">
+		SELECT count(ID) FROM ucm_role a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="creater!=null">
+				and a.CREATER = #{creater}
+			</if>
+			<if test="createTime!=null">
+				and a.CREATE_TIME = #{createTime}
+			</if>
+			<if test="updater!=null">
+				and a.UPDATER = #{updater}
+			</if>
+			<if test="updateTime!=null">
+				and a.UPDATE_TIME = #{updateTime}
+			</if>
+			<if test="deleted!=null">
+				and a.DELETED = #{deleted}
+			</if>
+			<if test="deptId!=null">
+				and a.DEPT_ID = #{deptId}
+			</if>
+			<if test="valid!=null">
+				and a.VALID = #{valid}
+			</if>
+			<if test="code!=null and code!=''">
+				and a.CODE  = #{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME  = #{name}
+			</if>
+			<if test="roleType!=null and roleType!=''">
+				and a.ROLE_TYPE  = #{roleType}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and a.REMARK  = #{remark}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有的ID -->
+	<select id="getAllIds" resultType="java.lang.String" parameterType="com.suncreate.entity.ucm.UcmRole" flushCache="true">
+		SELECT ID FROM ucm_role a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="creater!=null">
+				and a.CREATER = #{creater}
+			</if>
+			<if test="createTime!=null">
+				and a.CREATE_TIME = #{createTime}
+			</if>
+			<if test="updater!=null">
+				and a.UPDATER = #{updater}
+			</if>
+			<if test="updateTime!=null">
+				and a.UPDATE_TIME = #{updateTime}
+			</if>
+			<if test="deleted!=null">
+				and a.DELETED = #{deleted}
+			</if>
+			<if test="deptId!=null">
+				and a.DEPT_ID = #{deptId}
+			</if>
+			<if test="valid!=null">
+				and a.VALID = #{valid}
+			</if>
+			<if test="code!=null and code!=''">
+				and a.CODE  = #{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME  = #{name}
+			</if>
+			<if test="roleType!=null and roleType!=''">
+				and a.ROLE_TYPE  = #{roleType}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and a.REMARK  = #{remark}
+			</if>
+		</where>
+		<if test="map!=null">
+			<if test="map.orderBy!=null">
+				${map.orderBy}
+			</if>
+		</if>
+	</select>
+
+	<!-- 按条件获取 -->
+	<select id="getListByWhere" resultMap="BaseResultMap" parameterType="com.suncreate.entity.ucm.UcmRole" flushCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from ucm_role a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="creater!=null">
+				and a.CREATER = #{creater}
+			</if>
+			<if test="createTime!=null">
+				and a.CREATE_TIME = #{createTime}
+			</if>
+			<if test="updater!=null">
+				and a.UPDATER = #{updater}
+			</if>
+			<if test="updateTime!=null">
+				and a.UPDATE_TIME = #{updateTime}
+			</if>
+			<if test="deleted!=null">
+				and a.DELETED = #{deleted}
+			</if>
+			<if test="deptId!=null">
+				and a.DEPT_ID = #{deptId}
+			</if>
+			<if test="valid!=null">
+				and a.VALID = #{valid}
+			</if>
+			<if test="code!=null and code!=''">
+				and a.CODE =#{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME =#{name}
+			</if>
+			<if test="roleType!=null and roleType!=''">
+				and a.ROLE_TYPE =#{roleType}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and a.REMARK =#{remark}
+			</if>
+		</where>
+		<if test="map!=null">
+			<if test="map.orderBy!=null">
+				${map.orderBy}
+			</if>
+			<if test="map.orderBy==null">
+				ORDER BY a.ID asc
+			</if>
+		</if>
+	</select>
+
+	<!-- 按条件获取信息 -->
+	<select id="getModelByWhere" resultMap="BaseResultMap" parameterType="com.suncreate.entity.ucm.UcmRole" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from ucm_role a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="creater!=null">
+				and a.CREATER = #{creater}
+			</if>
+			<if test="createTime!=null">
+				and a.CREATE_TIME = #{createTime}
+			</if>
+			<if test="updater!=null">
+				and a.UPDATER = #{updater}
+			</if>
+			<if test="updateTime!=null">
+				and a.UPDATE_TIME = #{updateTime}
+			</if>
+			<if test="deleted!=null">
+				and a.DELETED = #{deleted}
+			</if>
+			<if test="deptId!=null">
+				and a.DEPT_ID = #{deptId}
+			</if>
+			<if test="valid!=null">
+				and a.VALID = #{valid}
+			</if>
+			<if test="code!=null and code!=''">
+				and a.CODE =#{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME =#{name}
+			</if>
+			<if test="roleType!=null and roleType!=''">
+				and a.ROLE_TYPE =#{roleType}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and a.REMARK =#{remark}
+			</if>
+		</where>
+		ORDER BY a.ID asc
+	</select>
+
+	<!-- 按条件删除信息-->
+	<delete id="deleteByWhere" parameterType="com.suncreate.entity.ucm.UcmRole" flushCache="true">
+		delete from ucm_role
+		<where>
+			<if test="id!=null">
+				and ID = #{id}
+			</if>
+			<if test="creater!=null">
+				and CREATER = #{creater}
+			</if>
+			<if test="createTime!=null">
+				and CREATE_TIME = #{createTime}
+			</if>
+			<if test="updater!=null">
+				and UPDATER = #{updater}
+			</if>
+			<if test="updateTime!=null">
+				and UPDATE_TIME = #{updateTime}
+			</if>
+			<if test="deleted!=null">
+				and DELETED = #{deleted}
+			</if>
+			<if test="deptId!=null">
+				and DEPT_ID = #{deptId}
+			</if>
+			<if test="valid!=null">
+				and VALID = #{valid}
+			</if>
+			<if test="code!=null and code!=''">
+				and CODE =#{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and NAME =#{name}
+			</if>
+			<if test="roleType!=null and roleType!=''">
+				and ROLE_TYPE =#{roleType}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and REMARK =#{remark}
+			</if>
+		</where>
+	</delete>
+</mapper>

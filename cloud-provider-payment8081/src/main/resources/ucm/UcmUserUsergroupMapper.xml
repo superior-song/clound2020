@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suncreate.repository.ucm.UcmUserUsergroupMapper">
+	<resultMap id="BaseResultMap" type="com.suncreate.entity.ucm.UcmUserUsergroup">
+		<id column="UUID" property="uuid" jdbcType="NUMERIC" />
+		<result column="ORGCODE" property="orgcode" jdbcType="VARCHAR"/>
+		<result column="USERREF" property="userref" jdbcType="VARCHAR"/>
+		<result column="USERGROUP" property="usergroup" jdbcType="VARCHAR"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		a.UUID,a.ORGCODE,a.USERREF,a.USERGROUP
+	</sql>
+
+	<!-- 获取信息 -->
+	<select id="getModelByKey" resultMap="BaseResultMap" parameterType="java.lang.Long" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from UCM_USER_USERGROUP a where a.UUID = #{uuid}
+	</select>
+
+	<!-- 删除信息 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long" flushCache="true">
+		delete from UCM_USER_USERGROUP where UUID = #{uuid}
+	</delete>
+
+	<!-- 插入信息,插入后获取自增主键值 -->
+	<insert id="insert" parameterType="com.suncreate.entity.ucm.UcmUserUsergroup" flushCache="true">
+		<selectKey keyProperty="uuid" resultType="java.lang.Long" order="BEFORE">
+			SELECT SEQ_UCM_USER_USERGROUP.nextval from dual
+		</selectKey>
+		insert into UCM_USER_USERGROUP (UUID,ORGCODE,USERREF,USERGROUP)
+		values (#{uuid,jdbcType=NUMERIC},
+		#{orgcode,jdbcType=VARCHAR},
+		#{userref,jdbcType=VARCHAR},
+		#{usergroup,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertList" parameterType="java.util.List" useGeneratedKeys="false">
+		<selectKey keyProperty="uuid" resultType="java.lang.Long" order="BEFORE">
+			SELECT SEQ_UCM_USER_USERGROUP.nextval from dual
+		</selectKey>
+		insert into UCM_USER_USERGROUP (UUID,ORGCODE,USERREF,USERGROUP)
+		<foreach collection="list" item="item" index="index" separator="union all">
+			(
+			select
+			#{item.uuid,jdbcType=NUMERIC},
+			#{item.orgcode,jdbcType=VARCHAR},
+			#{item.userref,jdbcType=VARCHAR},
+			#{item.usergroup,jdbcType=VARCHAR})
+			from
+			dual
+			)
+		</foreach>
+	</insert>
+
+	<!-- 精确更新 -->
+	<update id="updateSelective" parameterType="com.suncreate.entity.ucm.UcmUserUsergroup" flushCache="true">
+		update UCM_USER_USERGROUP a
+		<set >
+			<if test="orgcode != null" >
+				a.ORGCODE = #{orgcode},
+			</if>
+			<if test="userref != null" >
+				a.USERREF = #{userref},
+			</if>
+			<if test="usergroup != null" >
+				a.USERGROUP = #{usergroup}
+			</if>
+		</set>
+		where a.UUID = #{uuid}
+	</update>
+
+	<!-- 统计记录 -->
+	<select id="countAll" resultType="java.lang.Long" parameterType="com.suncreate.entity.ucm.UcmUserUsergroup" flushCache="true">
+		SELECT count(UUID) FROM UCM_USER_USERGROUP a
+		<where>
+			<if test="uuid!=null">
+				and a.UUID = #{uuid}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and a.ORGCODE  = #{orgcode}
+			</if>
+			<if test="userref!=null and userref!=''">
+				and a.USERREF  = #{userref}
+			</if>
+			<if test="usergroup!=null and usergroup!=''">
+				and a.USERGROUP  = #{usergroup}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有的ID -->
+	<select id="getAllIds" resultType="java.lang.String" parameterType="com.suncreate.entity.ucm.UcmUserUsergroup" flushCache="true">
+		SELECT UUID FROM UCM_USER_USERGROUP a
+		<where>
+			<if test="uuid!=null">
+				and a.UUID = #{uuid}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and a.ORGCODE  = #{orgcode}
+			</if>
+			<if test="userref!=null and userref!=''">
+				and a.USERREF  = #{userref}
+			</if>
+			<if test="usergroup!=null and usergroup!=''">
+				and a.USERGROUP  = #{usergroup}
+			</if>
+		</where>
+		<if test="map!=null">
+			<if test="map.orderBy!=null">
+				${map.orderBy}
+			</if>
+		</if>
+	</select>
+
+	<!-- 按条件获取 -->
+	<select id="getListByWhere" resultMap="BaseResultMap" parameterType="com.suncreate.entity.ucm.UcmUserUsergroup" flushCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from UCM_USER_USERGROUP a
+		<where>
+			<if test="uuid!=null">
+				and a.UUID = #{uuid}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and a.ORGCODE =#{orgcode}
+			</if>
+			<if test="userref!=null and userref!=''">
+				and a.USERREF =#{userref}
+			</if>
+			<if test="usergroup!=null and usergroup!=''">
+				and a.USERGROUP =#{usergroup}
+			</if>
+		</where>
+		<if test="map!=null">
+			<if test="map.orderBy!=null">
+				${map.orderBy}
+			</if>
+			<if test="map.orderBy==null">
+				ORDER BY a.UUID asc
+			</if>
+		</if>
+	</select>
+
+	<!-- 按条件获取信息 -->
+	<select id="getModelByWhere" resultMap="BaseResultMap" parameterType="com.suncreate.entity.ucm.UcmUserUsergroup" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from UCM_USER_USERGROUP a
+		<where>
+			<if test="uuid!=null">
+				and a.UUID = #{uuid}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and a.ORGCODE =#{orgcode}
+			</if>
+			<if test="userref!=null and userref!=''">
+				and a.USERREF =#{userref}
+			</if>
+			<if test="usergroup!=null and usergroup!=''">
+				and a.USERGROUP =#{usergroup}
+			</if>
+		</where>
+		ORDER BY a.UUID asc
+	</select>
+
+	<!-- 按条件删除信息-->
+	<delete id="deleteByWhere" parameterType="com.suncreate.entity.ucm.UcmUserUsergroup" flushCache="true">
+		delete from UCM_USER_USERGROUP
+		<where>
+			<if test="uuid!=null">
+				and UUID = #{uuid}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and ORGCODE =#{orgcode}
+			</if>
+			<if test="userref!=null and userref!=''">
+				and USERREF =#{userref}
+			</if>
+			<if test="usergroup!=null and usergroup!=''">
+				and USERGROUP =#{usergroup}
+			</if>
+		</where>
+	</delete>
+</mapper>

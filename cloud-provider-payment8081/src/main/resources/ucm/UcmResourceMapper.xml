@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suncreate.repository.ucm.UcmResourceMapper">
+	<resultMap id="BaseResultMap" type="com.suncreate.entity.ucm.UcmResource">
+		<id column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="CREATER" property="creater" jdbcType="NUMERIC"/>
+		<result column="CREATER_TIME" property="createrTime" jdbcType="NUMERIC"/>
+		<result column="DELETED" property="deleted" jdbcType="NUMERIC"/>
+		<result column="DEPT_ID" property="deptId" jdbcType="NUMERIC"/>
+		<result column="CODE" property="code" jdbcType="VARCHAR"/>
+		<result column="NAME" property="name" jdbcType="VARCHAR"/>
+		<result column="SYSTEM" property="system" jdbcType="VARCHAR"/>
+		<result column="MODULE" property="module" jdbcType="VARCHAR"/>
+		<result column="RESOURCE_TYPE" property="resourceType" jdbcType="NUMERIC"/>
+		<result column="ICONNAME" property="iconname" jdbcType="VARCHAR"/>
+		<result column="ORDER_NUM" property="orderNum" jdbcType="NUMERIC"/>
+		<result column="LEVELS" property="levels" jdbcType="NUMERIC"/>
+		<result column="PARENT_ID" property="parentId" jdbcType="NUMERIC"/>
+		<result column="PARENT_NAME" property="parentName" jdbcType="VARCHAR"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		a.ID,a.CREATER,a.CREATER_TIME,a.DELETED,a.DEPT_ID,a.CODE,a.NAME,a.SYSTEM,a.MODULE,a.RESOURCE_TYPE,a.ICONNAME,a.ORDER_NUM,a.LEVELS,a.PARENT_ID
+	</sql>
+
+	<!-- 获取信息 -->
+	<select id="getModelByKey" resultMap="BaseResultMap" parameterType="java.lang.Long" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from ucm_resource a where a.ID = #{id}
+	</select>
+
+	<!-- 删除信息 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long" flushCache="true">
+		delete from ucm_resource where ID = #{id}
+	</delete>
+
+	<!-- 插入信息,插入后获取自增主键值 -->
+	<insert id="insert" parameterType="com.suncreate.entity.ucm.UcmResource" flushCache="true">
+		<selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
+			SELECT SEQ_ucm_resource.nextval from dual
+		</selectKey>
+		insert into ucm_resource (ID,CREATER,CREATER_TIME,DELETED,DEPT_ID,CODE,NAME,SYSTEM,MODULE,RESOURCE_TYPE,ICONNAME,ORDER_NUM,LEVELS,PARENT_ID)
+		values (#{id,jdbcType=NUMERIC},
+
+		#{creater,jdbcType=NUMERIC},
+		#{createrTime,jdbcType=NUMERIC},
+		#{deleted,jdbcType=NUMERIC},
+		#{deptId,jdbcType=NUMERIC},
+		#{code,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{system,jdbcType=VARCHAR},
+		#{module,jdbcType=VARCHAR},
+		#{resourceType,jdbcType=VARCHAR},
+		#{iconname,jdbcType=VARCHAR},
+		#{orderNum,jdbcType=NUMERIC},
+		#{levels,jdbcType=NUMERIC},
+		#{parentId,jdbcType=NUMERIC}
+		)
+	</insert>
+
+	<!-- 精确更新 -->
+	<update id="updateSelective" parameterType="com.suncreate.entity.ucm.UcmResource" flushCache="true">
+		update ucm_resource a
+		<set >
+			<if test="creater != null" >
+				a.CREATER = #{creater},
+			</if>
+			<if test="createrTime != null" >
+				a.CREATER_TIME = #{createrTime},
+			</if>
+			<if test="deleted != null" >
+				a.DELETED = #{deleted},
+			</if>
+			<if test="deptId != null" >
+				a.DEPT_ID = #{deptId},
+			</if>
+			<if test="code != null" >
+				a.CODE = #{code},
+			</if>
+			<if test="name != null" >
+				a.NAME = #{name},
+			</if>
+			<if test="system != null" >
+				a.SYSTEM = #{system},
+			</if>
+			<if test="module != null" >
+				a.MODULE = #{module},
+			</if>
+			<if test="resourceType != null" >
+				a.RESOURCE_TYPE = #{resourceType},
+			</if>
+			<if test="iconname != null" >
+				a.ICONNAME = #{iconname},
+			</if>
+			<if test="orderNum != null" >
+				a.ORDER_NUM = #{orderNum},
+			</if>
+			<if test="levels != null" >
+				a.LEVELS = #{levels},
+			</if>
+			<if test="parentId != null" >
+				a.PARENT_ID = #{parentId}
+			</if>
+		</set>
+		where a.ID = #{id}
+	</update>
+
+	<!-- 统计记录 -->
+	<select id="countAll" resultType="java.lang.Long" parameterType="com.suncreate.entity.ucm.UcmResource" flushCache="true">
+		SELECT count(ID) FROM ucm_resource a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="creater!=null">
+				and a.CREATER = #{creater}
+			</if>
+			<if test="createrTime!=null">
+				and a.CREATER_TIME = #{createrTime}
+			</if>
+			<if test="deleted!=null">
+				and a.DELETED = #{deleted}
+			</if>
+			<if test="deptId!=null">
+				and a.DEPT_ID = #{deptId}
+			</if>
+			<if test="code!=null and code!=''">
+				and a.CODE  = #{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME  = #{name}
+			</if>
+			<if test="system!=null and system!=''">
+				and a.SYSTEM  = #{system}
+			</if>
+			<if test="module!=null and module!=''">
+				and a.MODULE  = #{module}
+			</if>
+			<if test="resourceType!=null and resourceType!=''">
+				and a.RESOURCE_TYPE  = #{resourceType}
+			</if>
+			<if test="iconname!=null and iconname!=''">
+				and a.ICONNAME  = #{iconname}
+			</if>
+			<if test="orderNum!=null">
+				and a.ORDER_NUM = #{orderNum}
+			</if>
+			<if test="levels!=null">
+				and a.LEVELS = #{levels}
+			</if>
+			<if test="parentId!=null">
+				and a.PARENT_ID = #{parentId}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有的ID -->
+	<select id="getAllIds" resultType="java.lang.String" parameterType="com.suncreate.entity.ucm.UcmResource" flushCache="true">
+		SELECT ID FROM ucm_resource a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="creater!=null">
+				and a.CREATER = #{creater}
+			</if>
+			<if test="createrTime!=null">
+				and a.CREATER_TIME = #{createrTime}
+			</if>
+			<if test="deleted!=null">
+				and a.DELETED = #{deleted}
+			</if>
+			<if test="deptId!=null">
+				and a.DEPT_ID = #{deptId}
+			</if>
+			<if test="code!=null and code!=''">
+				and a.CODE  = #{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME  = #{name}
+			</if>
+			<if test="system!=null and system!=''">
+				and a.SYSTEM  = #{system}
+			</if>
+			<if test="module!=null and module!=''">
+				and a.MODULE  = #{module}
+			</if>
+			<if test="resourceType!=null and resourceType!=''">
+				and a.RESOURCE_TYPE  = #{resourceType}
+			</if>
+			<if test="iconname!=null and iconname!=''">
+				and a.ICONNAME  = #{iconname}
+			</if>
+			<if test="orderNum!=null">
+				and a.ORDER_NUM = #{orderNum}
+			</if>
+			<if test="levels!=null">
+				and a.LEVELS = #{levels}
+			</if>
+			<if test="parentId!=null">
+				and a.PARENT_ID = #{parentId}
+			</if>
+		</where>
+		<if test="map!=null">
+			<if test="map.orderBy!=null">
+				${map.orderBy}
+			</if>
+		</if>
+	</select>
+
+	<!-- 按条件获取 -->
+	<select id="getListByWhere" resultMap="BaseResultMap" parameterType="com.suncreate.entity.ucm.UcmResource" flushCache="true">
+		select
+		<include refid="Base_Column_List" />,ifnull (b.name,a.NAME ) as parent_name
+		from ucm_resource a   LEFT join ucm_resource b on a.parent_id = b.id
+		<where>
+			<if test="map.parentId!=null and map.parentId != -1">
+				and a.parent_id = #{map.parentId}
+			</if>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="creater!=null">
+				and a.CREATER = #{creater}
+			</if>
+			<if test="createrTime!=null">
+				and a.CREATER_TIME = #{createrTime}
+			</if>
+			<if test="deleted!=null">
+				and a.DELETED = #{deleted}
+			</if>
+			<if test="deptId!=null">
+				and a.DEPT_ID = #{deptId}
+			</if>
+			<if test="code!=null and code!=''">
+				and a.CODE =#{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME like  concat('%',#{name},'%')
+			</if>
+			<if test="system!=null and system!=''">
+				and a.SYSTEM =#{system}
+			</if>
+			<if test="module!=null and module!=''">
+				and a.MODULE =#{module}
+			</if>
+			<if test="resourceType!=null and resourceType!=''">
+				and a.RESOURCE_TYPE =#{resourceType}
+			</if>
+			<if test="iconname!=null and iconname!=''">
+				and a.ICONNAME =#{iconname}
+			</if>
+			<if test="orderNum!=null">
+				and a.ORDER_NUM = #{orderNum}
+			</if>
+			<if test="levels!=null">
+				and a.LEVELS = #{levels}
+			</if>
+			<if test="parentId!=null">
+				and a.PARENT_ID = #{parentId}
+			</if>
+		</where>
+		<if test="map!=null">
+			<if test="map.orderBy!=null">
+				${map.orderBy}
+			</if>
+			<if test="map.orderBy==null">
+				ORDER BY a.ID asc
+			</if>
+		</if>
+	</select>
+
+	<!-- 按条件获取信息 -->
+	<select id="getModelByWhere" resultMap="BaseResultMap" parameterType="com.suncreate.entity.ucm.UcmResource" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from ucm_resource a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="creater!=null">
+				and a.CREATER = #{creater}
+			</if>
+			<if test="createrTime!=null">
+				and a.CREATER_TIME = #{createrTime}
+			</if>
+			<if test="deleted!=null">
+				and a.DELETED = #{deleted}
+			</if>
+			<if test="deptId!=null">
+				and a.DEPT_ID = #{deptId}
+			</if>
+			<if test="code!=null and code!=''">
+				and a.CODE =#{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME =#{name}
+			</if>
+			<if test="system!=null and system!=''">
+				and a.SYSTEM =#{system}
+			</if>
+			<if test="module!=null and module!=''">
+				and a.MODULE =#{module}
+			</if>
+			<if test="resourceType!=null and resourceType!=''">
+				and a.RESOURCE_TYPE =#{resourceType}
+			</if>
+			<if test="iconname!=null and iconname!=''">
+				and a.ICONNAME =#{iconname}
+			</if>
+			<if test="orderNum!=null">
+				and a.ORDER_NUM = #{orderNum}
+			</if>
+			<if test="levels!=null">
+				and a.LEVELS = #{levels}
+			</if>
+			<if test="parentId!=null">
+				and a.PARENT_ID = #{parentId}
+			</if>
+		</where>
+		ORDER BY a.ID asc
+	</select>
+
+	<!-- 按条件删除信息-->
+	<delete id="deleteByWhere" parameterType="com.suncreate.entity.ucm.UcmResource" flushCache="true">
+		delete from ucm_resource
+		<where>
+			<if test="id!=null">
+				and ID = #{id}
+			</if>
+			<if test="creater!=null">
+				and CREATER = #{creater}
+			</if>
+			<if test="createrTime!=null">
+				and CREATER_TIME = #{createrTime}
+			</if>
+			<if test="deleted!=null">
+				and DELETED = #{deleted}
+			</if>
+			<if test="deptId!=null">
+				and DEPT_ID = #{deptId}
+			</if>
+			<if test="code!=null and code!=''">
+				and CODE =#{code}
+			</if>
+			<if test="name!=null and name!=''">
+				and NAME =#{name}
+			</if>
+			<if test="system!=null and system!=''">
+				and SYSTEM =#{system}
+			</if>
+			<if test="module!=null and module!=''">
+				and MODULE =#{module}
+			</if>
+			<if test="resourceType!=null and resourceType!=''">
+				and RESOURCE_TYPE =#{resourceType}
+			</if>
+			<if test="iconname!=null and iconname!=''">
+				and ICONNAME =#{iconname}
+			</if>
+			<if test="orderNum!=null">
+				and ORDER_NUM = #{orderNum}
+			</if>
+			<if test="levels!=null">
+				and LEVELS = #{levels}
+			</if>
+			<if test="parentId!=null">
+				and PARENT_ID = #{parentId}
+			</if>
+		</where>
+	</delete>
+</mapper>

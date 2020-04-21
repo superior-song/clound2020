@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suncreate.repository.ucm.UcmRoleResourceMapper">
+	<resultMap id="BaseResultMap" type="com.suncreate.entity.ucm.UcmRoleResource">
+		<id column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR"/>
+		<result column="SYSTEM" property="system" jdbcType="VARCHAR"/>
+		<result column="MODULE" property="module" jdbcType="VARCHAR"/>
+		<result column="ROLE" property="role" jdbcType="VARCHAR"/>
+		<result column="RESOURCEREF" property="resourceref" jdbcType="VARCHAR"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		a.ID,a.ORG_CODE,a.SYSTEM,a.MODULE,a.ROLE,a.RESOURCEREF
+	</sql>
+
+	<!-- 获取信息 -->
+	<select id="getModelByKey" resultMap="BaseResultMap" parameterType="java.lang.Long" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from ucm_role_resource a where a.ID = #{id}
+	</select>
+
+	<!-- 删除信息 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long" flushCache="true">
+		delete from ucm_role_resource where ID = #{id}
+	</delete>
+
+	<!-- 插入信息,插入后获取自增主键值 -->
+	<insert id="insert" parameterType="com.suncreate.entity.ucm.UcmRoleResource" flushCache="true">
+		<selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
+			SELECT SEQ_ucm_role_resource.nextval from dual
+		</selectKey>
+		insert into ucm_role_resource (ID,ORG_CODE,SYSTEM,MODULE,ROLE,RESOURCEREF)
+		values (#{id,jdbcType=NUMERIC},
+
+		#{orgCode,jdbcType=VARCHAR},
+		#{system,jdbcType=VARCHAR},
+		#{module,jdbcType=VARCHAR},
+		#{role,jdbcType=VARCHAR},
+		#{resourceref,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<!-- 精确更新 -->
+	<update id="updateSelective" parameterType="com.suncreate.entity.ucm.UcmRoleResource" flushCache="true">
+		update ucm_role_resource a
+		<set >
+			<if test="orgCode != null" >
+				a.ORG_CODE = #{orgCode},
+			</if>
+			<if test="system != null" >
+				a.SYSTEM = #{system},
+			</if>
+			<if test="module != null" >
+				a.MODULE = #{module},
+			</if>
+			<if test="role != null" >
+				a.ROLE = #{role},
+			</if>
+			<if test="resourceref != null" >
+				a.RESOURCEREF = #{resourceref}
+			</if>
+		</set>
+		where a.ID = #{id}
+	</update>
+
+	<!-- 统计记录 -->
+	<select id="countAll" resultType="java.lang.Long" parameterType="com.suncreate.entity.ucm.UcmRoleResource" flushCache="true">
+		SELECT count(ID) FROM ucm_role_resource a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="orgCode!=null and orgCode!=''">
+				and a.ORG_CODE  = #{orgCode}
+			</if>
+			<if test="system!=null and system!=''">
+				and a.SYSTEM  = #{system}
+			</if>
+			<if test="module!=null and module!=''">
+				and a.MODULE  = #{module}
+			</if>
+			<if test="role!=null and role!=''">
+				and a.ROLE  = #{role}
+			</if>
+			<if test="resourceref!=null and resourceref!=''">
+				and a.RESOURCEREF  = #{resourceref}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有的ID -->
+	<select id="getAllIds" resultType="java.lang.String" parameterType="com.suncreate.entity.ucm.UcmRoleResource" flushCache="true">
+		SELECT ID FROM ucm_role_resource a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="orgCode!=null and orgCode!=''">
+				and a.ORG_CODE  = #{orgCode}
+			</if>
+			<if test="system!=null and system!=''">
+				and a.SYSTEM  = #{system}
+			</if>
+			<if test="module!=null and module!=''">
+				and a.MODULE  = #{module}
+			</if>
+			<if test="role!=null and role!=''">
+				and a.ROLE  = #{role}
+			</if>
+			<if test="resourceref!=null and resourceref!=''">
+				and a.RESOURCEREF  = #{resourceref}
+			</if>
+		</where>
+		<if test="map!=null">
+			<if test="map.orderBy!=null">
+				${map.orderBy}
+			</if>
+		</if>
+	</select>
+
+	<!-- 按条件获取 -->
+	<select id="getListByWhere" resultMap="BaseResultMap" parameterType="com.suncreate.entity.ucm.UcmRoleResource" flushCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from ucm_role_resource a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="orgCode!=null and orgCode!=''">
+				and a.ORG_CODE =#{orgCode}
+			</if>
+			<if test="system!=null and system!=''">
+				and a.SYSTEM =#{system}
+			</if>
+			<if test="module!=null and module!=''">
+				and a.MODULE =#{module}
+			</if>
+			<if test="role!=null and role!=''">
+				and a.ROLE =#{role}
+			</if>
+			<if test="resourceref!=null and resourceref!=''">
+				and a.RESOURCEREF =#{resourceref}
+			</if>
+		</where>
+		<if test="map!=null">
+			<if test="map.orderBy!=null">
+				${map.orderBy}
+			</if>
+			<if test="map.orderBy==null">
+				ORDER BY a.ID asc
+			</if>
+		</if>
+	</select>
+
+	<!-- 按条件获取信息 -->
+	<select id="getModelByWhere" resultMap="BaseResultMap" parameterType="com.suncreate.entity.ucm.UcmRoleResource" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from ucm_role_resource a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="orgCode!=null and orgCode!=''">
+				and a.ORG_CODE =#{orgCode}
+			</if>
+			<if test="system!=null and system!=''">
+				and a.SYSTEM =#{system}
+			</if>
+			<if test="module!=null and module!=''">
+				and a.MODULE =#{module}
+			</if>
+			<if test="role!=null and role!=''">
+				and a.ROLE =#{role}
+			</if>
+			<if test="resourceref!=null and resourceref!=''">
+				and a.RESOURCEREF =#{resourceref}
+			</if>
+		</where>
+		ORDER BY a.ID asc
+	</select>
+
+	<!-- 按条件删除信息-->
+	<delete id="deleteByWhere" parameterType="com.suncreate.entity.ucm.UcmRoleResource" flushCache="true">
+		delete from ucm_role_resource
+		<where>
+			<if test="id!=null">
+				and ID = #{id}
+			</if>
+			<if test="orgCode!=null and orgCode!=''">
+				and ORG_CODE =#{orgCode}
+			</if>
+			<if test="system!=null and system!=''">
+				and SYSTEM =#{system}
+			</if>
+			<if test="module!=null and module!=''">
+				and MODULE =#{module}
+			</if>
+			<if test="role!=null and role!=''">
+				and ROLE =#{role}
+			</if>
+			<if test="resourceref!=null and resourceref!=''">
+				and RESOURCEREF =#{resourceref}
+			</if>
+		</where>
+	</delete>
+</mapper>

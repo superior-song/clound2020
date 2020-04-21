@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suncreate.repository.ucm.UcmUserMapper">
+	<resultMap id="BaseResultMap" type="com.suncreate.entity.ucm.UcmUser">
+		<id column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="VALID" property="valid" jdbcType="VARCHAR"/>
+		<result column="PASSWORD" property="password" jdbcType="VARCHAR"/>
+		<result column="USERNAME" property="username" jdbcType="VARCHAR"/>
+		<result column="NAME" property="name" jdbcType="VARCHAR"/>
+		<result column="POSITION" property="position" jdbcType="VARCHAR"/>
+		<result column="GENDER" property="gender" jdbcType="VARCHAR"/>
+		<result column="CARD_TYPE" property="cardType" jdbcType="VARCHAR"/>
+		<result column="CARD_NUM" property="cardNum" jdbcType="VARCHAR"/>
+		<result column="MAIL" property="mail" jdbcType="VARCHAR"/>
+		<result column="MOBILE" property="mobile" jdbcType="VARCHAR"/>
+		<result column="REMARK" property="remark" jdbcType="VARCHAR"/>
+		<result column="NATIVE_PLACE" property="nativePlace" jdbcType="VARCHAR"/>
+		<result column="BLOOD_TYPE" property="bloodType" jdbcType="VARCHAR"/>
+		<result column="NATION" property="nation" jdbcType="VARCHAR"/>
+		<result column="POLOITI_STATUS" property="poloitiStatus" jdbcType="VARCHAR"/>
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR"/>
+		<result column="SPECIALTIES" property="specialties" jdbcType="VARCHAR"/>
+		<result column="GRADUCATE_FROM" property="graducateFrom" jdbcType="VARCHAR"/>
+		<result column="MAJOR" property="major" jdbcType="VARCHAR"/>
+		<result column="GRADUATE_DATE" property="graduateDate" jdbcType="NUMERIC"/>
+		<result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR"/>
+		<result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR"/>
+		<result column="DELETED" property="deleted" jdbcType="NUMERIC"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		a.ID,a.VALID,a.PASSWORD,a.USERNAME,a.NAME,a.POSITION,a.GENDER,a.CARD_TYPE,a.CARD_NUM,a.MAIL,a.MOBILE,a.REMARK,a.NATIVE_PLACE,a.BLOOD_TYPE,a.NATION,a.POLOITI_STATUS,a.ADDRESS,a.SPECIALTIES,a.GRADUCATE_FROM,a.MAJOR,a.GRADUATE_DATE,a.DEPT_CODE,a.DEPT_NAME,a.DELETED
+	</sql>
+
+	<!-- 获取信息 -->
+	<select id="getModelByKey" resultMap="BaseResultMap" parameterType="java.lang.Long" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from ucm_user a where a.ID = #{id}
+	</select>
+
+	<!-- 删除信息 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long" flushCache="true">
+		delete from ucm_user where ID = #{id}
+	</delete>
+
+	<!-- 插入信息,插入后获取自增主键值 -->
+	<insert id="insert" parameterType="com.suncreate.entity.ucm.UcmUser" flushCache="true">
+		<selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
+			SELECT SEQ_ucm_user.nextval from dual
+		</selectKey>
+		insert into ucm_user (ID,VALID,PASSWORD,USERNAME,NAME,POSITION,GENDER,CARD_TYPE,CARD_NUM,MAIL,MOBILE,REMARK,NATIVE_PLACE,BLOOD_TYPE,NATION,POLOITI_STATUS,ADDRESS,SPECIALTIES,GRADUCATE_FROM,MAJOR,GRADUATE_DATE,DEPT_CODE,DEPT_NAME,DELETED)
+		values (#{id,jdbcType=NUMERIC},
+
+		#{valid,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{username,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{position,jdbcType=VARCHAR},
+		#{gender,jdbcType=VARCHAR},
+		#{cardType,jdbcType=VARCHAR},
+		#{cardNum,jdbcType=VARCHAR},
+		#{mail,jdbcType=VARCHAR},
+		#{mobile,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{nativePlace,jdbcType=VARCHAR},
+		#{bloodType,jdbcType=VARCHAR},
+		#{nation,jdbcType=VARCHAR},
+		#{poloitiStatus,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{specialties,jdbcType=VARCHAR},
+		#{graducateFrom,jdbcType=VARCHAR},
+		#{major,jdbcType=VARCHAR},
+		#{graduateDate,jdbcType=NUMERIC},
+		#{deptCode,jdbcType=VARCHAR},
+		#{deptName,jdbcType=VARCHAR},
+		#{deleted,jdbcType=NUMERIC}
+		)
+	</insert>
+
+	<!-- 精确更新 -->
+	<update id="updateSelective" parameterType="com.suncreate.entity.ucm.UcmUser" flushCache="true">
+		update ucm_user a
+		<set >
+			<if test="valid != null" >
+				a.VALID = #{valid},
+			</if>
+			<if test="password != null" >
+				a.PASSWORD = #{password},
+			</if>
+			<if test="username != null" >
+				a.USERNAME = #{username},
+			</if>
+			<if test="name != null" >
+				a.NAME = #{name},
+			</if>
+			<if test="position != null" >
+				a.POSITION = #{position},
+			</if>
+			<if test="gender != null" >
+				a.GENDER = #{gender},
+			</if>
+			<if test="cardType != null" >
+				a.CARD_TYPE = #{cardType},
+			</if>
+			<if test="cardNum != null" >
+				a.CARD_NUM = #{cardNum},
+			</if>
+			<if test="mail != null" >
+				a.MAIL = #{mail},
+			</if>
+			<if test="mobile != null" >
+				a.MOBILE = #{mobile},
+			</if>
+			<if test="remark != null" >
+				a.REMARK = #{remark},
+			</if>
+			<if test="nativePlace != null" >
+				a.NATIVE_PLACE = #{nativePlace},
+			</if>
+			<if test="bloodType != null" >
+				a.BLOOD_TYPE = #{bloodType},
+			</if>
+			<if test="nation != null" >
+				a.NATION = #{nation},
+			</if>
+			<if test="poloitiStatus != null" >
+				a.POLOITI_STATUS = #{poloitiStatus},
+			</if>
+			<if test="address != null" >
+				a.ADDRESS = #{address},
+			</if>
+			<if test="specialties != null" >
+				a.SPECIALTIES = #{specialties},
+			</if>
+			<if test="graducateFrom != null" >
+				a.GRADUCATE_FROM = #{graducateFrom},
+			</if>
+			<if test="major != null" >
+				a.MAJOR = #{major},
+			</if>
+			<if test="graduateDate != null" >
+				a.GRADUATE_DATE = #{graduateDate},
+			</if>
+			<if test="deptCode != null" >
+				a.DEPT_CODE = #{deptCode},
+			</if>
+			<if test="deptName != null" >
+				a.DEPT_NAME = #{deptName},
+			</if>
+			<if test="deleted != null" >
+				a.DELETED = #{deleted}
+			</if>
+		</set>
+		where a.ID = #{id}
+	</update>
+
+	<!-- 统计记录 -->
+	<select id="countAll" resultType="java.lang.Long" parameterType="com.suncreate.entity.ucm.UcmUser" flushCache="true">
+		SELECT count(ID) FROM ucm_user a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="valid!=null and valid!=''">
+				and a.VALID  = #{valid}
+			</if>
+			<if test="password!=null and password!=''">
+				and a.PASSWORD  = #{password}
+			</if>
+			<if test="username!=null and username!=''">
+				and a.USERNAME  = #{username}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME  = #{name}
+			</if>
+			<if test="position!=null and position!=''">
+				and a.POSITION  = #{position}
+			</if>
+			<if test="gender!=null and gender!=''">
+				and a.GENDER  = #{gender}
+			</if>
+			<if test="cardType!=null and cardType!=''">
+				and a.CARD_TYPE  = #{cardType}
+			</if>
+			<if test="cardNum!=null and cardNum!=''">
+				and a.CARD_NUM  = #{cardNum}
+			</if>
+			<if test="mail!=null and mail!=''">
+				and a.MAIL  = #{mail}
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				and a.MOBILE  = #{mobile}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and a.REMARK  = #{remark}
+			</if>
+			<if test="nativePlace!=null and nativePlace!=''">
+				and a.NATIVE_PLACE  = #{nativePlace}
+			</if>
+			<if test="bloodType!=null and bloodType!=''">
+				and a.BLOOD_TYPE  = #{bloodType}
+			</if>
+			<if test="nation!=null and nation!=''">
+				and a.NATION  = #{nation}
+			</if>
+			<if test="poloitiStatus!=null and poloitiStatus!=''">
+				and a.POLOITI_STATUS  = #{poloitiStatus}
+			</if>
+			<if test="address!=null and address!=''">
+				and a.ADDRESS  = #{address}
+			</if>
+			<if test="specialties!=null and specialties!=''">
+				and a.SPECIALTIES  = #{specialties}
+			</if>
+			<if test="graducateFrom!=null and graducateFrom!=''">
+				and a.GRADUCATE_FROM  = #{graducateFrom}
+			</if>
+			<if test="major!=null and major!=''">
+				and a.MAJOR  = #{major}
+			</if>
+			<if test="graduateDate!=null">
+				and a.GRADUATE_DATE = #{graduateDate}
+			</if>
+			<if test="deptCode!=null and deptCode!=''">
+				and a.DEPT_CODE  = #{deptCode}
+			</if>
+			<if test="deptName!=null and deptName!=''">
+				and a.DEPT_NAME  = #{deptName}
+			</if>
+			<if test="deleted!=null">
+				and a.DELETED = #{deleted}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有的ID -->
+	<select id="getAllIds" resultType="java.lang.String" parameterType="com.suncreate.entity.ucm.UcmUser" flushCache="true">
+		SELECT ID FROM ucm_user a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="valid!=null and valid!=''">
+				and a.VALID  = #{valid}
+			</if>
+			<if test="password!=null and password!=''">
+				and a.PASSWORD  = #{password}
+			</if>
+			<if test="username!=null and username!=''">
+				and a.USERNAME  = #{username}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME  = #{name}
+			</if>
+			<if test="position!=null and position!=''">
+				and a.POSITION  = #{position}
+			</if>
+			<if test="gender!=null and gender!=''">
+				and a.GENDER  = #{gender}
+			</if>
+			<if test="cardType!=null and cardType!=''">
+				and a.CARD_TYPE  = #{cardType}
+			</if>
+			<if test="cardNum!=null and cardNum!=''">
+				and a.CARD_NUM  = #{cardNum}
+			</if>
+			<if test="mail!=null and mail!=''">
+				and a.MAIL  = #{mail}
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				and a.MOBILE  = #{mobile}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and a.REMARK  = #{remark}
+			</if>
+			<if test="nativePlace!=null and nativePlace!=''">
+				and a.NATIVE_PLACE  = #{nativePlace}
+			</if>
+			<if test="bloodType!=null and bloodType!=''">
+				and a.BLOOD_TYPE  = #{bloodType}
+			</if>
+			<if test="nation!=null and nation!=''">
+				and a.NATION  = #{nation}
+			</if>
+			<if test="poloitiStatus!=null and poloitiStatus!=''">
+				and a.POLOITI_STATUS  = #{poloitiStatus}
+			</if>
+			<if test="address!=null and address!=''">
+				and a.ADDRESS  = #{address}
+			</if>
+			<if test="specialties!=null and specialties!=''">
+				and a.SPECIALTIES  = #{specialties}
+			</if>
+			<if test="graducateFrom!=null and graducateFrom!=''">
+				and a.GRADUCATE_FROM  = #{graducateFrom}
+			</if>
+			<if test="major!=null and major!=''">
+				and a.MAJOR  = #{major}
+			</if>
+			<if test="graduateDate!=null">
+				and a.GRADUATE_DATE = #{graduateDate}
+			</if>
+			<if test="deptCode!=null and deptCode!=''">
+				and a.DEPT_CODE  = #{deptCode}
+			</if>
+			<if test="deptName!=null and deptName!=''">
+				and a.DEPT_NAME  = #{deptName}
+			</if>
+			<if test="deleted!=null">
+				and a.DELETED = #{deleted}
+			</if>
+		</where>
+		<if test="map!=null">
+			<if test="map.orderBy!=null">
+				${map.orderBy}
+			</if>
+		</if>
+	</select>
+
+	<!-- 按条件获取 -->
+	<select id="getListByWhere" resultMap="BaseResultMap" parameterType="com.suncreate.entity.ucm.UcmUser" flushCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from ucm_user a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="valid!=null and valid!=''">
+				and a.VALID =#{valid}
+			</if>
+			<if test="password!=null and password!=''">
+				and a.PASSWORD =#{password}
+			</if>
+			<if test="username!=null and username!=''">
+				and a.USERNAME =#{username}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME =#{name}
+			</if>
+			<if test="position!=null and position!=''">
+				and a.POSITION =#{position}
+			</if>
+			<if test="gender!=null and gender!=''">
+				and a.GENDER =#{gender}
+			</if>
+			<if test="cardType!=null and cardType!=''">
+				and a.CARD_TYPE =#{cardType}
+			</if>
+			<if test="cardNum!=null and cardNum!=''">
+				and a.CARD_NUM =#{cardNum}
+			</if>
+			<if test="mail!=null and mail!=''">
+				and a.MAIL =#{mail}
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				and a.MOBILE =#{mobile}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and a.REMARK =#{remark}
+			</if>
+			<if test="nativePlace!=null and nativePlace!=''">
+				and a.NATIVE_PLACE =#{nativePlace}
+			</if>
+			<if test="bloodType!=null and bloodType!=''">
+				and a.BLOOD_TYPE =#{bloodType}
+			</if>
+			<if test="nation!=null and nation!=''">
+				and a.NATION =#{nation}
+			</if>
+			<if test="poloitiStatus!=null and poloitiStatus!=''">
+				and a.POLOITI_STATUS =#{poloitiStatus}
+			</if>
+			<if test="address!=null and address!=''">
+				and a.ADDRESS =#{address}
+			</if>
+			<if test="specialties!=null and specialties!=''">
+				and a.SPECIALTIES =#{specialties}
+			</if>
+			<if test="graducateFrom!=null and graducateFrom!=''">
+				and a.GRADUCATE_FROM =#{graducateFrom}
+			</if>
+			<if test="major!=null and major!=''">
+				and a.MAJOR =#{major}
+			</if>
+			<if test="graduateDate!=null">
+				and a.GRADUATE_DATE = #{graduateDate}
+			</if>
+			<if test="deptCode!=null and deptCode!=''">
+				and a.DEPT_CODE =#{deptCode}
+			</if>
+			<if test="deptName!=null and deptName!=''">
+				and a.DEPT_NAME =#{deptName}
+			</if>
+			<if test="deleted!=null">
+				and a.DELETED = #{deleted}
+			</if>
+		</where>
+		<if test="map!=null">
+			<if test="map.orderBy!=null">
+				${map.orderBy}
+			</if>
+			<if test="map.orderBy==null">
+				ORDER BY a.ID asc
+			</if>
+		</if>
+	</select>
+
+	<!-- 按条件获取信息 -->
+	<select id="getModelByWhere" resultMap="BaseResultMap" parameterType="com.suncreate.entity.ucm.UcmUser" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from ucm_user a
+		<where>
+			<if test="id!=null">
+				and a.ID = #{id}
+			</if>
+			<if test="valid!=null and valid!=''">
+				and a.VALID =#{valid}
+			</if>
+			<if test="password!=null and password!=''">
+				and a.PASSWORD =#{password}
+			</if>
+			<if test="username!=null and username!=''">
+				and a.USERNAME =#{username}
+			</if>
+			<if test="name!=null and name!=''">
+				and a.NAME =#{name}
+			</if>
+			<if test="position!=null and position!=''">
+				and a.POSITION =#{position}
+			</if>
+			<if test="gender!=null and gender!=''">
+				and a.GENDER =#{gender}
+			</if>
+			<if test="cardType!=null and cardType!=''">
+				and a.CARD_TYPE =#{cardType}
+			</if>
+			<if test="cardNum!=null and cardNum!=''">
+				and a.CARD_NUM =#{cardNum}
+			</if>
+			<if test="mail!=null and mail!=''">
+				and a.MAIL =#{mail}
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				and a.MOBILE =#{mobile}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and a.REMARK =#{remark}
+			</if>
+			<if test="nativePlace!=null and nativePlace!=''">
+				and a.NATIVE_PLACE =#{nativePlace}
+			</if>
+			<if test="bloodType!=null and bloodType!=''">
+				and a.BLOOD_TYPE =#{bloodType}
+			</if>
+			<if test="nation!=null and nation!=''">
+				and a.NATION =#{nation}
+			</if>
+			<if test="poloitiStatus!=null and poloitiStatus!=''">
+				and a.POLOITI_STATUS =#{poloitiStatus}
+			</if>
+			<if test="address!=null and address!=''">
+				and a.ADDRESS =#{address}
+			</if>
+			<if test="specialties!=null and specialties!=''">
+				and a.SPECIALTIES =#{specialties}
+			</if>
+			<if test="graducateFrom!=null and graducateFrom!=''">
+				and a.GRADUCATE_FROM =#{graducateFrom}
+			</if>
+			<if test="major!=null and major!=''">
+				and a.MAJOR =#{major}
+			</if>
+			<if test="graduateDate!=null">
+				and a.GRADUATE_DATE = #{graduateDate}
+			</if>
+			<if test="deptCode!=null and deptCode!=''">
+				and a.DEPT_CODE =#{deptCode}
+			</if>
+			<if test="deptName!=null and deptName!=''">
+				and a.DEPT_NAME =#{deptName}
+			</if>
+			<if test="deleted!=null">
+				and a.DELETED = #{deleted}
+			</if>
+		</where>
+		ORDER BY a.ID asc
+	</select>
+
+	<!-- 按条件删除信息-->
+	<delete id="deleteByWhere" parameterType="com.suncreate.entity.ucm.UcmUser" flushCache="true">
+		delete from ucm_user
+		<where>
+			<if test="id!=null">
+				and ID = #{id}
+			</if>
+			<if test="valid!=null and valid!=''">
+				and VALID =#{valid}
+			</if>
+			<if test="password!=null and password!=''">
+				and PASSWORD =#{password}
+			</if>
+			<if test="username!=null and username!=''">
+				and USERNAME =#{username}
+			</if>
+			<if test="name!=null and name!=''">
+				and NAME =#{name}
+			</if>
+			<if test="position!=null and position!=''">
+				and POSITION =#{position}
+			</if>
+			<if test="gender!=null and gender!=''">
+				and GENDER =#{gender}
+			</if>
+			<if test="cardType!=null and cardType!=''">
+				and CARD_TYPE =#{cardType}
+			</if>
+			<if test="cardNum!=null and cardNum!=''">
+				and CARD_NUM =#{cardNum}
+			</if>
+			<if test="mail!=null and mail!=''">
+				and MAIL =#{mail}
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				and MOBILE =#{mobile}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and REMARK =#{remark}
+			</if>
+			<if test="nativePlace!=null and nativePlace!=''">
+				and NATIVE_PLACE =#{nativePlace}
+			</if>
+			<if test="bloodType!=null and bloodType!=''">
+				and BLOOD_TYPE =#{bloodType}
+			</if>
+			<if test="nation!=null and nation!=''">
+				and NATION =#{nation}
+			</if>
+			<if test="poloitiStatus!=null and poloitiStatus!=''">
+				and POLOITI_STATUS =#{poloitiStatus}
+			</if>
+			<if test="address!=null and address!=''">
+				and ADDRESS =#{address}
+			</if>
+			<if test="specialties!=null and specialties!=''">
+				and SPECIALTIES =#{specialties}
+			</if>
+			<if test="graducateFrom!=null and graducateFrom!=''">
+				and GRADUCATE_FROM =#{graducateFrom}
+			</if>
+			<if test="major!=null and major!=''">
+				and MAJOR =#{major}
+			</if>
+			<if test="graduateDate!=null">
+				and GRADUATE_DATE = #{graduateDate}
+			</if>
+			<if test="deptCode!=null and deptCode!=''">
+				and DEPT_CODE =#{deptCode}
+			</if>
+			<if test="deptName!=null and deptName!=''">
+				and DEPT_NAME =#{deptName}
+			</if>
+			<if test="deleted!=null">
+				and DELETED = #{deleted}
+			</if>
+		</where>
+	</delete>
+</mapper>

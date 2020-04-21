@@ -1,0 +1,136 @@
+########################################################
+### 服务基本参数设置
+########################################################
+# The logging configuration. On a real server this will be a file url. e.g. file://{{ mujina_dir }}/logback.xml
+logging:
+  config: classpath:logback.xml
+  level:
+    com.suncreate.repository.*: DEBUG
+
+server:
+  port: 10008
+  servlet:
+    context-path:
+    session:
+      # 8 hours before we time-out
+      timeout: 28800
+      cookie:
+        secure: false
+########################################################
+### rest template
+########################################################
+rest:
+  maxConnTotal: 100
+  maxConnPerRoute: 50
+  requestTimeout: 30000
+
+
+kafka:
+  topic: kafka2tab
+  serverurl: 22.86.116.41:19092
+########################################################
+### database setting
+########################################################
+### 数据库密码加密key java -cp druid-1.0.16.jar com.alibaba.druid.filter.config.ConfigTools you_password
+spring:
+  main.allow-bean-definition-overriding: true
+  # 自定义的主数据源配置信息
+  primary:
+    datasource:
+      #使用druid连接池
+      type: com.alibaba.druid.pool.DruidDataSource
+      #       Oracle数据库
+      druid:
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+        url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
+        passwordCallbackClassName: DecryptCallback
+        username: c##wfmjx
+        max-active: 10
+        initial-size: 1
+        max-wait: 6000
+        min-idle: 1
+
+        # wall防止sql注入，需要特定设置否则会抛出异常
+        filters: stat
+        # 打开PSCache，并且指定每个连接上PSCache的大小
+        pool-prepared-statements: true
+        max-pool-prepared-statement-per-connection-size: 100
+        validation-query: SELECT 1 FROM dual
+        validation-query-timeout: 5
+        test-on-borrow: false
+        test-on-return: false
+        test-while-idle: true
+        # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        time-between-eviction-runs-millis: 60000
+        # 配置一个连接在池中最小生存的时间，单位是毫秒
+        min-evictable-idle-time-millis: 300000
+        # 通过connectProperties属性来打开mergeSql功能；慢SQL记录;密码加密
+        connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000;password=364CC0CE1B46F20D99AFC448B9F9B32E
+        use-global-data-source-stat: true
+        filter:
+          wall:
+            config:
+              multi-statement-allow: true
+
+     # Mysql数据连接
+      secondary:
+         url: jdbc:mysql://localhost:3306/bootdemo?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+         username: root
+         password: 123456
+         driver-class-name: com.mysql.jdbc.Driver
+  #redis配置
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+#    jedis:
+#      pool:
+#        max-active: 8
+#        max-wait: -1
+#        max-idle: 8
+#        min-idle: 0
+#    timeout: 10000
+#    cluster:
+#      nodes:
+#        - 127.0.0.1:6379
+
+# MyBatis
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: com.suncreate
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mappers/repository/**/*Mapper.xml
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis-config.xml
+
+#开启事物
+transaction:
+  rollback-on-commit-failure: true
+pagehelper:
+   # helperDialect: oracle                          #分页插件方言选择 oralce数据库
+    helperDialect: mysql                          #分页插件方言选择 mysql数据库
+    reasonable: true                               #合理化参数，设为true时pageNum<=0 时会查第一页， pageNum>pages（超过总数时），会查询最后一页
+    supportMethodsArguments: true
+
+#定时任务配置
+quartz:
+    job:
+      synchronizeAgentFromGenesysJobTrigger: 0 30 0 * * ? #定时任务
+      synchronizeJob1Trigger: 1 30 0 * * ? #定时任务1
+      synchronizeJob2Trigger: 2 30 0 * * ? #定时任务2
+      synchronizeJob3Trigger: 3 30 0 * * ? #定时任务3
+      synchronizeJob4Trigger: 4 30 0 * * ? #定时任务4
+      synchronizeJob5Trigger: 5 30 0 * * ? #定时任务5
+      synchronizeJob6Trigger: 6 30 0 * * ? #定时任6
+
+
+egooapi:
+  #下载的路径
+  profile: C:/sc_upload/
+  #上传路径
+  uploadpath: C:/sc_upload/
+
+#SESSION失效时间 8个小时
+sessionTime:
+  failureTime: 28800

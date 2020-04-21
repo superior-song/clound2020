@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suncreate.repository.ucm.UcmUserRoleMapper">
+	<resultMap id="BaseResultMap" type="com.suncreate.entity.ucm.UcmUserRole">
+		<id column="ID" property="ID" jdbcType="NUMERIC" />
+		<result column="ORGCODE" property="orgcode" jdbcType="VARCHAR"/>
+		<result column="USERREF" property="userref" jdbcType="VARCHAR"/>
+		<result column="ROLE" property="role" jdbcType="VARCHAR"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		a.ID,a.ORGCODE,a.USERREF,a.ROLE
+	</sql>
+
+	<!-- 获取信息 -->
+	<select id="getModelByKey" resultMap="BaseResultMap" parameterType="java.lang.Long" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from UCM_USER_ROLE a where a.ID = #{ID}
+	</select>
+
+	<!-- 删除信息 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long" flushCache="true">
+		delete from UCM_USER_ROLE where ID = #{ID}
+	</delete>
+
+	<!-- 插入信息,插入后获取自增主键值 -->
+	<insert id="insert" parameterType="com.suncreate.entity.ucm.UcmUserRole" flushCache="true">
+		<selectKey keyProperty="ID" resultType="java.lang.Long" order="BEFORE">
+			SELECT SEQ_UCM_USER_ROLE.nextval from dual
+		</selectKey>
+		insert into UCM_USER_ROLE (ID,ORGCODE,USERREF,ROLE)
+		values (#{ID,jdbcType=NUMERIC},
+
+		#{orgcode,jdbcType=VARCHAR},
+		#{userref,jdbcType=VARCHAR},
+		#{role,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<!-- 精确更新 -->
+	<update id="updateSelective" parameterType="com.suncreate.entity.ucm.UcmUserRole" flushCache="true">
+		update UCM_USER_ROLE a
+		<set >
+			<if test="orgcode != null" >
+				a.ORGCODE = #{orgcode},
+			</if>
+			<if test="userref != null" >
+				a.USERREF = #{userref},
+			</if>
+			<if test="role != null" >
+				a.ROLE = #{role}
+			</if>
+		</set>
+		where a.ID = #{ID}
+	</update>
+
+	<!-- 统计记录 -->
+	<select id="countAll" resultType="java.lang.Long" parameterType="com.suncreate.entity.ucm.UcmUserRole" flushCache="true">
+		SELECT count(ID) FROM UCM_USER_ROLE a
+		<where>
+			<if test="ID!=null">
+				and a.ID = #{ID}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and a.ORGCODE  = #{orgcode}
+			</if>
+			<if test="userref!=null and userref!=''">
+				and a.USERREF  = #{userref}
+			</if>
+			<if test="role!=null and role!=''">
+				and a.ROLE  = #{role}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有的ID -->
+	<select id="getAllIds" resultType="java.lang.String" parameterType="com.suncreate.entity.ucm.UcmUserRole" flushCache="true">
+		SELECT ID FROM UCM_USER_ROLE a
+		<where>
+			<if test="ID!=null">
+				and a.ID = #{ID}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and a.ORGCODE  = #{orgcode}
+			</if>
+			<if test="userref!=null and userref!=''">
+				and a.USERREF  = #{userref}
+			</if>
+			<if test="role!=null and role!=''">
+				and a.ROLE  = #{role}
+			</if>
+		</where>
+		<if test="map!=null">
+			<if test="map.orderBy!=null">
+				${map.orderBy}
+			</if>
+		</if>
+	</select>
+
+	<!-- 按条件获取 -->
+	<select id="getListByWhere" resultMap="BaseResultMap" parameterType="com.suncreate.entity.ucm.UcmUserRole" flushCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from UCM_USER_ROLE a
+		<where>
+			<if test="ID!=null">
+				and a.ID = #{ID}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and a.ORGCODE =#{orgcode}
+			</if>
+			<if test="userref!=null and userref!=''">
+				and a.USERREF =#{userref}
+			</if>
+			<if test="role!=null and role!=''">
+				and a.ROLE =#{role}
+			</if>
+		</where>
+		<if test="map!=null">
+			<if test="map.orderBy!=null">
+				${map.orderBy}
+			</if>
+			<if test="map.orderBy==null">
+				ORDER BY a.ID asc
+			</if>
+		</if>
+	</select>
+
+	<!-- 按条件获取信息 -->
+	<select id="getModelByWhere" resultMap="BaseResultMap" parameterType="com.suncreate.entity.ucm.UcmUserRole" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from UCM_USER_ROLE a
+		<where>
+			<if test="ID!=null">
+				and a.ID = #{ID}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and a.ORGCODE =#{orgcode}
+			</if>
+			<if test="userref!=null and userref!=''">
+				and a.USERREF =#{userref}
+			</if>
+			<if test="role!=null and role!=''">
+				and a.ROLE =#{role}
+			</if>
+		</where>
+		ORDER BY a.ID asc
+	</select>
+
+	<!-- 按条件删除信息-->
+	<delete id="deleteByWhere" parameterType="com.suncreate.entity.ucm.UcmUserRole" flushCache="true">
+		delete from UCM_USER_ROLE
+		<where>
+			<if test="ID!=null">
+				and ID = #{ID}
+			</if>
+			<if test="orgcode!=null and orgcode!=''">
+				and ORGCODE =#{orgcode}
+			</if>
+			<if test="userref!=null and userref!=''">
+				and USERREF =#{userref}
+			</if>
+			<if test="role!=null and role!=''">
+				and ROLE =#{role}
+			</if>
+		</where>
+	</delete>
+</mapper>
